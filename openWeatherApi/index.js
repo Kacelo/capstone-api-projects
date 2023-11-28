@@ -21,9 +21,20 @@ app.post("/get-forecast", async (req, res) => {
 
   try {
     const result = await axios.post(url);
-    console.log(result.data[0]);
-    res.render("index.ejs", { content: JSON.stringify(result.data) });
-    console.log(result.data.weather[0]);
+    const condition = result.data.weather[0].main;
+    const cloudCover = result.data.clouds.all;
+    const city = result.data.name;
+    console.log(condition, cloudCover);
+    let message;
+    if (condition === "Clouds" && cloudCover > 50){
+      message = "There is a possibility, stay vigillant"
+    }else if(condition === "Rain"){
+      message = "Rain is emminent"
+    }else{
+      message = "Nothing but clear skies today"
+    }
+    res.render("index.ejs", { condition: condition, clouds:cloudCover, location:city, verdict: message });
+    console.log(result.data);
   } catch (error) {
     res.render("index.ejs", { content: JSON.stringify(error) });
   }
