@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rain Check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Titan+One&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+</head>
+
+<body>
+  <h1>Rain Check</h1>
+  <div class="card">
+    <h2>
+      <%= location %>
+    </h2>
+    <p>
+      <%= condition %>
+    </p>
+    <p>
+      <%= clouds %> % cloud cover
+    </p>
+    <p>
+      <%= verdict %>
+    </p>
+  </div>
+  <form id="myForm" method="post">
+    <label for="idInput">City:</label>
+    <input type="text" id="idInput" name="location">
+    <label for="submit">Route:</label>
+    <input id="get" type="submit" value="Check For Rain" formaction="/get-forecast">
+  </form>
+</body>
+
+</html>
