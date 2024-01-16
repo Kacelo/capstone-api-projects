@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cocktail Hub 🍸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Titan+One&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles/main.css">
+
+</head>
+
+<body>
+  <h1>🍹 Cocktail Hub 🍸</h1>
+  <form id="myForm" method="post">
+    <label for="idInput">Cocktail:</label>
+    <input type="text" id="idInput" name="cocktail" />
+    <label for="submit">Search:</label>
+    <input
+      id="search"
+      type="submit"
+      value="Find Cocktail"
+      formaction="/get-cocktail"
+    />
+    <input
+      id="random"
+      type="submit"
+      value="Find A Random Cocktail"
+      formaction="/get-random-cocktail"
+    />
+  </form>
+  <div class="card-container">
+    <% if (apiResponse && Array.isArray(apiResponse)) { %>
+    <% apiResponse.forEach(drink => { %>
+      <div class="card">
+        <h3><%= drink.strDrink %></h3>
+        <img src=<%= drink.strDrinkThumb %> alt="image" class="cardImage">
+        <p><strong>ID:</strong> <%= drink.idDrink %></p>
+        <p><strong>Category:</strong> <%= drink.strCategory %></p>
+        <p><strong>Alcoholic:</strong> <%= drink.strAlcoholic %></p>
+        <p><strong>Glass:</strong> <%= drink.strGlass %></p>
+        <p><strong>Ingredients:</strong></p>
+        <%
+        // Assuming 'apiResponse' is your data object
+        let currentIngredientNumber = 1;
+        
+        // Function to get the next ingredient key
+        function getNextIngredientKey() {
+          const nextKey = `strIngredient${currentIngredientNumber}`;
+          currentIngredientNumber++;
+          return nextKey;
+        }
+        
+        // Example loop to display ingredients dynamically
+        
+        for (let i = 1; i <= 7; i++) { // Adjust the loop limit as needed
+          const ingredientKey = getNextIngredientKey();
+        %>
+          <p> <%= drink[ingredientKey] ? drink[ingredientKey] : ""  %></p>
+        <%
+        }
+        %>
+        <p><strong>Instructions:</strong> <%= drink.strInstructions %></p>
+
+
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No data available.</p>
+  <% } %>
+  </div>
+
+</body>
+
+</html>
